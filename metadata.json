@@ -1,0 +1,9 @@
+{
+  "name": "Royal Quality Construction LLC",
+  "description": "High-converting premium contractor website for Royal Quality Construction LLC in Seattle, WA, featuring modern UI, smooth animations, and optimized lead generation.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
