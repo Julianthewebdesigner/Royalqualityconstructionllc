@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
           <div className="max-w-sm">
              <a href="#home" className="flex items-center gap-3 mb-6">
                 <img
-                  src="/assets/images/transparentlogo.png"
+                  src="/images/transparentlogo.png"
                   alt="Royal Quality Construction Logo"
                   className="h-14 w-auto"
                 />

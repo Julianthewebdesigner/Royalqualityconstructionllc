@@ -28,42 +28,42 @@ export const SERVICES: Service[] = [
     id: "remodeling",
     title: "Remodeling & Renovations",
     description: "Complete kitchen, bathroom, and full-home updates tailored to your lifestyle.",
-    image: "/assets/images/remodeling-repair.jpeg",
+    image: "/images/remodeling-repair.jpeg",
     icon: <Layout className="w-6 h-6" />
   },
   {
     id: "flooring",
     title: "Flooring",
     description: "Expert installation of hardwood, tile, laminate, and vinyl for a lasting finish.",
-    image: "/assets/images/flooring.jpeg",
+    image: "/images/flooring.jpeg",
     icon: <Layers className="w-6 h-6" />
   },
   {
     id: "drywall",
     title: "Drywall & Painting",
     description: "Seamless drywall repair and premium painting for a fresh, clean look.",
-    image: "/assets/images/drywall 2.jpeg",
+    image: "/images/drywall 2.jpeg",
     icon: <Palette className="w-6 h-6" />
   },
   {
     id: "tile",
     title: "Custom Tile",
     description: "Precision tile work for backsplashes, showers, and detailed floor patterns.",
-    image: "/assets/images/tile.jpeg",
+    image: "/images/tile.jpeg",
     icon: <Square className="w-6 h-6" />
   },
   {
     id: "framing",
     title: "Framing & Carpentry",
     description: "Solid structural framing and detailed finish carpentry you can depend on.",
-    image: "/assets/images/framing-carpentry.jpeg",
+    image: "/images/framing-carpentry.jpeg",
     icon: <Hammer className="w-6 h-6" />
   },
   {
     id: "exterior",
     title: "Decks & Siding",
     description: "Durable outdoor spaces and exterior protection built for Seattle weather.",
-    image: "/assets/images/Deck.jpeg",
+    image: "/images/Deck.jpeg",
     icon: <Umbrella className="w-6 h-6" />
   }
 ];

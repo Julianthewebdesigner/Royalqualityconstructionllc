@@ -27,7 +27,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
         <a href="#home" className="flex items-center gap-3 group">
           <img
-            src="/assets/images/transparentlogo.png"
+            src="/images/transparentlogo.png"
             alt="Royal Quality Construction Logo"
             className="h-12 w-auto group-hover:scale-105 transition-transform"
           />

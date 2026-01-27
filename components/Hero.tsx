@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-white/85 z-10"></div>
         <img
-          src="/assets/images/framing-carpentry.jpeg"
+          src="/images/framing-carpentry.jpeg"
           alt="Construction background"
           className="w-full h-full object-cover"
         />
