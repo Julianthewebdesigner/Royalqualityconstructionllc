@@ -20,9 +20,20 @@ const About: React.FC = () => {
           <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
             Our Benefits & <span className="text-accent">Commitment</span>
           </h2>
-          <p className="text-lg text-charcoal/70 mb-8 font-medium italic">
-            "We keep things simple, honest, and focused on what matters most to you: high-quality results delivered with zero headache."
-          </p>
+
+          {/* Owner Story */}
+          <div className="bg-white rounded-2xl p-6 mb-8 border-l-4 border-accent shadow-md">
+            <p className="text-lg text-charcoal/70 mb-3 font-medium italic">
+              "We keep things simple, honest, and focused on what matters most to you: high-quality results delivered with zero headache."
+            </p>
+            <p className="text-charcoal/70 mb-4 leading-relaxed">
+              Founded by <span className="font-bold text-charcoal">Jose Aguilar</span>, Royal Quality Construction was built on a foundation of integrity, craftsmanship, and an unwavering commitment to excellence. With over <span className="font-bold text-accent">30 years of hands-on experience</span> in the construction industry, Jose started from the ground up—literally learning the trade with his own two hands, one project at a time.
+            </p>
+            <p className="text-charcoal/70 leading-relaxed">
+              From humble beginnings as a young craftsman, Jose transformed his passion for building into a thriving business that serves the greater Seattle area. His journey wasn't easy, but every challenge taught him the value of precision, honesty, and treating every client's home as if it were his own. Today, that same dedication drives every project we undertake. When you work with Royal Quality Construction, you're not just hiring a contractor—you're partnering with a team that understands what it means to build dreams, one detail at a time.
+            </p>
+          </div>
+
           <p className="text-charcoal/70 mb-10 leading-relaxed">
             Working with Royal Quality Construction means less stress and better results. We show up on time, keep you informed, and do what we say we'll do. From start to finish, we stay focused on your goals, your budget, and the quality you expect for your Seattle home.
           </p>
@@ -64,14 +75,14 @@ const About: React.FC = () => {
            
            {/* Decorative elements */}
            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-3xl"></div>
-           <div className="absolute top-1/2 -left-12 -translate-y-1/2 flex flex-col gap-4">
-              <div className="w-24 h-24 bg-accent rounded-3xl flex flex-col items-center justify-center text-white shadow-xl rotate-3">
-                  <span className="text-2xl font-black">15+</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Years Exp</span>
+           <div className="absolute top-1/2 left-4 lg:-left-12 -translate-y-1/2 flex flex-col gap-4">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-accent rounded-3xl flex flex-col items-center justify-center text-white shadow-xl rotate-3">
+                  <span className="text-xl sm:text-2xl font-black">30+</span>
+                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Years Exp</span>
               </div>
-              <div className="w-24 h-24 bg-charcoal rounded-3xl flex flex-col items-center justify-center text-white shadow-xl -rotate-6">
-                  <span className="text-2xl font-black">500+</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Projects</span>
+              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-charcoal rounded-3xl flex flex-col items-center justify-center text-white shadow-xl -rotate-6">
+                  <span className="text-xl sm:text-2xl font-black">500+</span>
+                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">Projects</span>
               </div>
            </div>
         </div>

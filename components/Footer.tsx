@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BUSINESS_INFO, SERVICES } from '../constants';
-import { Facebook, Instagram, Linkedin, Heart } from 'lucide-react';
+import { Facebook, Instagram, Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const location = useLocation();
@@ -46,7 +46,6 @@ const Footer: React.FC = () => {
               <div className="flex gap-4">
                 <a href="https://www.facebook.com/RoyalQualityConstruction" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Facebook size={20} /></a>
                 <a href="https://www.instagram.com/royalqualityconstructionllc/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Instagram size={20} /></a>
-                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Linkedin size={20} /></a>
               </div>
           </div>
 
