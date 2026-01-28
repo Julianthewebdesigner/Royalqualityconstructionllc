@@ -15,13 +15,13 @@ const ImageSlider: React.FC = () => {
   const duplicatedImages = [...images, ...images];
 
   return (
-    <div className="relative w-full py-8 bg-gradient-to-b from-black via-neutral-950 to-white overflow-hidden border-y border-amber-500/20">
+    <div className="relative w-full max-w-[100vw] py-8 bg-gradient-to-b from-black via-neutral-950 to-white overflow-hidden border-y border-amber-500/20">
       {/* Subtle gold accent line at top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
 
       {/* Gradient overlays for fade effect - responsive widths */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-black to-transparent z-10"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-black to-transparent z-10"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
 
       {/* Sliding container with animation */}
       <div className="flex gap-3 md:gap-6 animate-slide">

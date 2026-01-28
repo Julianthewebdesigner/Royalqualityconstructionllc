@@ -6,9 +6,9 @@ import { Star } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
-    <Section id="about" className="overflow-visible">
+    <Section id="about" className="overflow-hidden">
       {/* Visual background text */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 opacity-[0.03] select-none pointer-events-none">
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 opacity-[0.03] select-none pointer-events-none hidden lg:block">
           <span className="text-[20rem] font-extrabold leading-none font-heading whitespace-nowrap">ROYAL</span>
       </div>
 

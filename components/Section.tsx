@@ -31,10 +31,10 @@ const Section: React.FC<SectionProps> = ({ children, id, className = "", dark = 
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      id={id} 
-      className={`relative py-20 px-4 md:px-8 lg:px-16 overflow-hidden ${dark ? 'bg-charcoal text-white' : 'bg-cream text-charcoal'} ${className}`}
+      id={id}
+      className={`relative w-full max-w-[100vw] py-20 px-4 md:px-8 lg:px-16 overflow-hidden ${dark ? 'bg-charcoal text-white' : 'bg-cream text-charcoal'} ${className}`}
     >
       <div className={`max-w-7xl mx-auto scroll-reveal ${isVisible ? 'visible' : ''}`}>
         {children}

@@ -10,7 +10,7 @@ import ServicePage from './pages/ServicePage';
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="relative">
+      <div className="relative w-full max-w-[100vw] overflow-x-hidden">
         {/* Light beam texture overlay */}
         <div className="beam-overlay"></div>
 
