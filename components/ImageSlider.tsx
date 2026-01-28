@@ -19,16 +19,16 @@ const ImageSlider: React.FC = () => {
       {/* Subtle gold accent line at top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
 
-      {/* Gradient overlays for fade effect */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+      {/* Gradient overlays for fade effect - responsive widths */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-black to-transparent z-10"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
 
       {/* Sliding container with animation */}
-      <div className="flex gap-6 animate-slide">
+      <div className="flex gap-3 md:gap-6 animate-slide">
         {duplicatedImages.map((image, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-64 h-40 rounded-xl overflow-hidden shadow-xl border border-amber-500/10 group"
+            className="flex-shrink-0 w-48 md:w-64 h-32 md:h-40 rounded-xl overflow-hidden shadow-xl border border-amber-500/10 group"
           >
             <img
               src={image.src}

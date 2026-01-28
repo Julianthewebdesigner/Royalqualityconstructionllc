@@ -44,8 +44,8 @@ const Footer: React.FC = () => {
                 Premier construction and remodeling services in the greater Seattle area. Quality work you can trust.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Facebook size={20} /></a>
-                <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Instagram size={20} /></a>
+                <a href="https://www.facebook.com/RoyalQualityConstruction" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Facebook size={20} /></a>
+                <a href="https://www.instagram.com/royalqualityconstructionllc/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Instagram size={20} /></a>
                 <a href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent transition-all"><Linkedin size={20} /></a>
               </div>
           </div>

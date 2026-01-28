@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import SocialSidebar from './components/SocialSidebar';
 import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
 
@@ -23,6 +24,9 @@ const App: React.FC = () => {
         </main>
 
         <Footer />
+
+        {/* Social Media Sidebar */}
+        <SocialSidebar />
 
         {/* Scroll to Top Button */}
         <ScrollToTop />
