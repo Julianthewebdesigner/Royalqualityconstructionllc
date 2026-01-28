@@ -30,6 +30,37 @@ const ServicePage: React.FC = () => {
       }
       metaKeywords.setAttribute('content', service.seoKeywords.join(', '));
 
+      // Update Open Graph meta tags for social sharing
+      const ogUrl = `https://royalqualityconstructionllc.com/services/${service.id}`;
+      const ogImage = `https://royalqualityconstructionllc.com${service.image}`;
+
+      const updateOrCreateMeta = (property: string, content: string) => {
+        let meta = document.querySelector(`meta[property="${property}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute('property', property);
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+      };
+
+      updateOrCreateMeta('og:type', 'website');
+      updateOrCreateMeta('og:url', ogUrl);
+      updateOrCreateMeta('og:title', service.seoTitle);
+      updateOrCreateMeta('og:description', service.seoDescription);
+      updateOrCreateMeta('og:image', ogImage);
+      updateOrCreateMeta('og:image:width', '1200');
+      updateOrCreateMeta('og:image:height', '630');
+      updateOrCreateMeta('og:image:alt', `${service.title} - Royal Quality Construction LLC`);
+
+      // Update Twitter meta tags for social sharing
+      updateOrCreateMeta('twitter:card', 'summary_large_image');
+      updateOrCreateMeta('twitter:url', ogUrl);
+      updateOrCreateMeta('twitter:title', service.seoTitle);
+      updateOrCreateMeta('twitter:description', service.seoDescription);
+      updateOrCreateMeta('twitter:image', ogImage);
+      updateOrCreateMeta('twitter:image:alt', `${service.title} - Royal Quality Construction LLC`);
+
       // Add JSON-LD structured data for SEO
       const script = document.createElement('script');
       script.type = 'application/ld+json';
@@ -64,7 +95,7 @@ const ServicePage: React.FC = () => {
             }
           ]
         },
-        "image": service.image,
+        "image": ogImage,
         "offers": {
           "@type": "Offer",
           "availability": "https://schema.org/InStock",

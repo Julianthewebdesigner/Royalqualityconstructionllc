@@ -9,15 +9,42 @@ import Contact from '../components/Contact';
 const Home: React.FC = () => {
   useEffect(() => {
     // Reset page title and meta description for home page
-    document.title = 'Royal Quality Construction LLC | Seattle, Tacoma, Puyallup Contractor';
+    document.title = 'Royal Quality Construction LLC | Premium Home Remodeling & Construction Services in Seattle, Tacoma, Puyallup';
 
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
         'content',
-        'Quality remodeling, framing, and construction services in Seattle, Tacoma, and Puyallup, WA. Get a free estimate today from Royal Quality Construction LLC.'
+        'Transform your home with Royal Quality Construction LLC. Expert remodeling, flooring, drywall, painting, custom tile, framing, carpentry, decks & siding. Serving Seattle, Tacoma & Puyallup with uncompromising quality, precision craftsmanship & exceptional service. Licensed & insured. Free estimates. Where plans become masterpieces.'
       );
     }
+
+    // Reset Open Graph and Twitter meta tags for home page
+    const updateOrCreateMeta = (property: string, content: string) => {
+      let meta = document.querySelector(`meta[property="${property}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('property', property);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    updateOrCreateMeta('og:type', 'website');
+    updateOrCreateMeta('og:url', 'https://royalqualityconstructionllc.com');
+    updateOrCreateMeta('og:title', 'Royal Quality Construction LLC | Premium Home Remodeling & Construction');
+    updateOrCreateMeta('og:description', 'Transform your home with expert remodeling, flooring, custom tile, framing & more. Serving Seattle, Tacoma & Puyallup with precision craftsmanship & exceptional service. Licensed & insured. Free estimates.');
+    updateOrCreateMeta('og:image', 'https://royalqualityconstructionllc.com/assets/images/BlackRYC.jpeg');
+    updateOrCreateMeta('og:image:width', '1200');
+    updateOrCreateMeta('og:image:height', '630');
+    updateOrCreateMeta('og:image:alt', 'Royal Quality Construction LLC - Premium Construction & Remodeling Services');
+
+    updateOrCreateMeta('twitter:card', 'summary_large_image');
+    updateOrCreateMeta('twitter:url', 'https://royalqualityconstructionllc.com');
+    updateOrCreateMeta('twitter:title', 'Royal Quality Construction LLC | Premium Home Remodeling & Construction');
+    updateOrCreateMeta('twitter:description', 'Transform your home with expert remodeling, flooring, custom tile, framing & more. Serving Seattle, Tacoma & Puyallup with precision craftsmanship & exceptional service. Licensed & insured. Free estimates.');
+    updateOrCreateMeta('twitter:image', 'https://royalqualityconstructionllc.com/assets/images/BlackRYC.jpeg');
+    updateOrCreateMeta('twitter:image:alt', 'Royal Quality Construction LLC - Premium Construction & Remodeling Services');
 
     // Add JSON-LD structured data for home page
     const script = document.createElement('script');
@@ -26,8 +53,8 @@ const Home: React.FC = () => {
       "@context": "https://schema.org",
       "@type": "HomeAndConstructionBusiness",
       "name": "Royal Quality Construction LLC",
-      "image": "/images/framing-carpentry.jpeg",
-      "description": "Quality construction and remodeling services in Seattle, Tacoma, and Puyallup, WA. Specializing in home renovations, flooring, drywall, painting, tile work, framing, carpentry, decks, and siding.",
+      "image": "https://royalqualityconstructionllc.com/assets/images/BlackRYC.jpeg",
+      "description": "Transform your home with Royal Quality Construction LLC. Expert remodeling, flooring, drywall, painting, custom tile, framing, carpentry, decks & siding. Serving Seattle, Tacoma & Puyallup with uncompromising quality, precision craftsmanship & exceptional service.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Seattle",
