@@ -18,7 +18,7 @@ import { Service, Benefit, FAQ } from './types';
 export const BUSINESS_INFO = {
   name: "Royal Quality Construction LLC",
   serviceArea: "Seattle, Washington (and nearby areas)",
-  email: "royalqualityconstructionllc@gmail.com",
+  email: "royalqualityconstruction.llc@gmail.com",
   phone: "206-856-1486",
   address: "Seattle, WA",
 };

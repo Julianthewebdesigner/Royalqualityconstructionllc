@@ -1,15 +1,36 @@
 
 import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BUSINESS_INFO, SERVICES } from '../constants';
 import { Facebook, Instagram, Linkedin, Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (href: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <footer className="bg-charcoal pt-32 pb-10 text-white px-4 md:px-8 overflow-hidden relative">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row justify-between gap-16 mb-20">
           <div className="max-w-sm">
-             <a href="#home" className="flex items-center gap-3 mb-6">
+             <Link to="/" className="flex items-center gap-3 mb-6">
                 <img
                   src="/images/transparentlogo.png"
                   alt="Royal Quality Construction Logo"
@@ -18,7 +39,7 @@ const Footer: React.FC = () => {
                 <span className="font-heading font-extrabold text-2xl tracking-tight text-white">
                   ROYAL QUALITY <span className="text-accent">CONSTRUCTION</span>
                 </span>
-              </a>
+              </Link>
               <p className="text-white/50 text-lg mb-8 font-medium">
                 Premier construction and remodeling services in the greater Seattle area. Quality work you can trust.
               </p>
@@ -33,17 +54,21 @@ const Footer: React.FC = () => {
              <div>
                 <h4 className="text-sm font-black uppercase tracking-widest text-white/30 mb-6">Navigation</h4>
                 <ul className="space-y-4 font-bold text-white/70">
-                   <li><a href="#home" className="hover:text-accent transition-colors">Home</a></li>
-                   <li><a href="#about" className="hover:text-accent transition-colors">About Us</a></li>
-                   <li><a href="#services" className="hover:text-accent transition-colors">Our Services</a></li>
-                   <li><a href="#contact" className="hover:text-accent transition-colors">Contact</a></li>
+                   <li><button onClick={() => handleNavClick('#home')} className="hover:text-accent transition-colors">Home</button></li>
+                   <li><button onClick={() => handleNavClick('#about')} className="hover:text-accent transition-colors">About Us</button></li>
+                   <li><button onClick={() => handleNavClick('#services')} className="hover:text-accent transition-colors">Our Services</button></li>
+                   <li><button onClick={() => handleNavClick('#contact')} className="hover:text-accent transition-colors">Contact</button></li>
                 </ul>
              </div>
              <div className="hidden md:block">
                 <h4 className="text-sm font-black uppercase tracking-widest text-white/30 mb-6">Services</h4>
                 <ul className="space-y-4 font-bold text-white/70">
                    {SERVICES.slice(0, 4).map(s => (
-                     <li key={s.id}><a href="#services" className="hover:text-accent transition-colors">{s.title}</a></li>
+                     <li key={s.id}>
+                       <Link to={`/services/${s.id}`} className="hover:text-accent transition-colors">
+                         {s.title}
+                       </Link>
+                     </li>
                    ))}
                 </ul>
              </div>

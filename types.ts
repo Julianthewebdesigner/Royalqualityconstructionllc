@@ -9,6 +9,23 @@ export interface Service {
   icon: React.ReactNode;
 }
 
+export interface ServiceDetail {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  icon: React.ReactNode;
+  longDescription: string;
+  process: {
+    title: string;
+    steps: { title: string; description: string }[];
+  };
+  whyChooseUs: string[];
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string[];
+}
+
 export interface Benefit {
   title: string;
   description: string;

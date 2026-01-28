@@ -4,8 +4,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Royal Quality Construction LLC | Seattle's Premium Contractor</title>
-    <meta name="description" content="Quality remodeling, framing, and construction services in Seattle, WA. Get a free estimate today from Royal Quality Construction LLC.">
+    <title>Royal Quality Construction LLC | Seattle, Tacoma, Puyallup Contractor</title>
+    <meta name="description" content="Professional construction and remodeling services in Seattle, Tacoma, and Puyallup, WA. Specializing in renovations, flooring, drywall, painting, tile, framing, decks, and siding. Licensed & insured. Free estimates.">
+    <meta name="keywords" content="construction Seattle, remodeling Tacoma, home renovation Puyallup, contractor Seattle, flooring installation Tacoma, drywall painting Puyallup, tile installation Seattle, framing carpentry Tacoma, deck builder Puyallup">
+    <meta name="author" content="Royal Quality Construction LLC">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://royalqualityconstructionllc.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://royalqualityconstructionllc.com">
+    <meta property="og:title" content="Royal Quality Construction LLC | Seattle, Tacoma, Puyallup">
+    <meta property="og:description" content="Professional construction and remodeling services in Seattle, Tacoma, and Puyallup. Licensed & insured. Free estimates.">
+    <meta property="og:image" content="/images/framing-carpentry.jpeg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://royalqualityconstructionllc.com">
+    <meta property="twitter:title" content="Royal Quality Construction LLC | Seattle, Tacoma, Puyallup">
+    <meta property="twitter:description" content="Professional construction and remodeling services in Seattle, Tacoma, and Puyallup. Licensed & insured. Free estimates.">
+    <meta property="twitter:image" content="/images/framing-carpentry.jpeg">
+
+    <!-- Local Business Schema will be injected by React components -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,6 +55,12 @@
         100% { transform: translateY(0px); }
       }
       .animate-float { animation: float 6s ease-in-out infinite; }
+
+      @keyframes slide {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-slide { animation: slide 30s linear infinite; }
       
       .beam-overlay {
         position: fixed;
