@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import ImageSlider from '../components/ImageSlider';
 import About from '../components/About';
 import Services from '../components/Services';
+import ProjectsPreview from '../components/ProjectsPreview';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 
@@ -118,6 +119,8 @@ const Home: React.FC = () => {
       </div>
 
       <Services />
+
+      <ProjectsPreview />
 
       <FAQ />
 

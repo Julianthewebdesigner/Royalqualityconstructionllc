@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Phone, Menu, X } from 'lucide-react';
 import { BUSINESS_INFO } from '../constants';
 
+type NavLink = { name: string; href: string; type: 'scroll' | 'route' };
+
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,31 +35,32 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Contact', href: '#contact' },
+  const navLinks: NavLink[] = [
+    { name: 'Home', href: '#home', type: 'scroll' },
+    { name: 'About', href: '#about', type: 'scroll' },
+    { name: 'Services', href: '#services', type: 'scroll' },
+    { name: 'Projects', href: '/projects', type: 'route' },
+    { name: 'Contact', href: '#contact', type: 'scroll' },
   ];
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (link: NavLink) => {
     setIsMenuOpen(false);
 
+    if (link.type === 'route') {
+      navigate(link.href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (location.pathname !== '/') {
-      // If not on home page, navigate to home then scroll
       navigate('/');
       setTimeout(() => {
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+        const element = document.querySelector(link.href);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } else {
-      // If on home page, just scroll
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      const element = document.querySelector(link.href);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -82,8 +85,12 @@ const Header: React.FC = () => {
           {navLinks.map((link) => (
             <button
               key={link.name}
-              onClick={() => handleNavClick(link.href)}
-              className="font-medium text-sm text-white/90 hover:text-accent transition-colors cursor-pointer"
+              onClick={() => handleNavClick(link)}
+              className={`font-medium text-sm transition-colors cursor-pointer ${
+                location.pathname === link.href
+                  ? 'text-accent'
+                  : 'text-white/90 hover:text-accent'
+              }`}
             >
               {link.name}
             </button>
@@ -114,8 +121,10 @@ const Header: React.FC = () => {
           {navLinks.map((link) => (
             <button
               key={link.name}
-              onClick={() => handleNavClick(link.href)}
-              className="text-lg font-semibold text-white text-left hover:text-accent transition-colors"
+              onClick={() => handleNavClick(link)}
+              className={`text-lg font-semibold text-left transition-colors ${
+                location.pathname === link.href ? 'text-accent' : 'text-white hover:text-accent'
+              }`}
             >
               {link.name}
             </button>

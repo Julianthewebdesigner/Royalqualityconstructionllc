@@ -6,6 +6,7 @@ import ScrollToTop from './components/ScrollToTop';
 import FloatingContactBar from './components/FloatingContactBar';
 import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
+import Projects from './pages/Projects';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services/:serviceId" element={<ServicePage />} />
+            <Route path="/projects" element={<Projects />} />
           </Routes>
         </main>
 
