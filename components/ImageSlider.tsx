@@ -1,14 +1,18 @@
 import React from 'react';
 
 const ImageSlider: React.FC = () => {
-  // Construction images for the slider
+  // Project photos for the slider
   const images = [
-    { src: '/assets/images/remodeling-repair.jpeg', alt: 'Home Remodeling' },
-    { src: '/assets/images/flooring.jpeg', alt: 'Flooring Installation' },
-    { src: '/assets/images/drywall 2.jpeg', alt: 'Drywall & Painting' },
-    { src: '/assets/images/tile.jpeg', alt: 'Custom Tile Work' },
-    { src: '/assets/images/framing-carpentry.jpeg', alt: 'Framing & Carpentry' },
-    { src: '/assets/images/Deck.jpeg', alt: 'Deck & Exterior' },
+    { src: '/images/kitcheninstall/kitcheninstall/20260106_133124.jpg', alt: 'Kitchen Remodel' },
+    { src: '/images/newsidingplusrepairs/newsidingplusrepairs%20(2)/IMG_20260223_152428.jpg', alt: 'Exterior Siding' },
+    { src: '/images/after/after/IMG_20260223_152922.jpg', alt: 'Exterior Restoration' },
+    { src: '/images/stairsplusrailsbeforeandafter/stairsplusrailingbeforeandafter/IMG_20260223_152648.jpg', alt: 'Staircase & Railings' },
+    { src: '/images/bedroomsupstairs/bedroomsupstairs/20260106_134132.jpg', alt: 'Bedroom Renovation' },
+    { src: '/images/exteriorpaint/exteriorpaint/IMG_20260223_152805.jpg', alt: 'Exterior Paint' },
+    { src: '/images/after/after/image000001.jpg', alt: 'Interior Remodel' },
+    { src: '/images/fw/fw%20(1)/IMG-20250905-WA0027.jpg', alt: 'Structural Framing' },
+    { src: '/images/kitcheninstall/kitcheninstall/20260106_133135.jpg', alt: 'Kitchen Finish Work' },
+    { src: '/images/after/after/IMG_20260223_152927.jpg', alt: 'Completed Exterior' },
   ];
 
   // Double the images array for seamless infinite scroll

@@ -421,12 +421,12 @@ const Projects: React.FC = () => {
           <h2 className="font-heading font-black text-4xl md:text-5xl text-white mb-4">
             Ready to Start Your Project?
           </h2>
-          <p className="text-white/80 text-xl mb-10 font-medium">
+          <p className="text-white text-xl mb-10 font-medium" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.25)' }}>
             Every project you just saw started with a free estimate. Let's talk about yours.
           </p>
           <a
             href={`tel:${BUSINESS_INFO.phone.replace(/[^0-9]/g, '')}`}
-            className="inline-flex items-center gap-3 bg-white text-accent px-10 py-5 rounded-full font-black text-lg hover:scale-105 transition-transform shadow-xl"
+            className="inline-flex items-center gap-3 bg-charcoal text-white px-10 py-5 rounded-full font-black text-lg hover:scale-105 transition-transform shadow-xl"
           >
             <Phone size={20} />
             Call {BUSINESS_INFO.phone}
