@@ -17,15 +17,29 @@ const Contact: React.FC = () => {
     e.preventDefault();
     if (!formRef.current) return;
 
+    const form = formRef.current;
+    (form.elements.namedItem('submitted_at') as HTMLInputElement).value =
+      new Date().toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short' });
+    (form.elements.namedItem('page_name') as HTMLInputElement).value =
+      window.location.pathname;
+
     setStatus('loading');
 
+    console.log('EmailJS: sending form...', {
+      service: SERVICE_ID,
+      template: TEMPLATE_ID,
+      fields: Object.fromEntries(new FormData(form)),
+    });
+
     emailjs
-      .sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+      .sendForm(SERVICE_ID, TEMPLATE_ID, form, { publicKey: PUBLIC_KEY })
       .then(() => {
+        console.log('EmailJS: email sent successfully');
         setStatus('success');
         formRef.current?.reset();
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('EmailJS: failed to send email', err);
         setStatus('error');
       });
   };
@@ -106,8 +120,8 @@ const Contact: React.FC = () => {
              ) : (
                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   {/* Hidden fields — must be inside the form and rendered before submit */}
-                  <input type="hidden" name="submitted_at" value={new Date().toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short' })} />
-                  <input type="hidden" name="page_name" value="Contact Page" />
+                  <input type="hidden" name="submitted_at" />
+                  <input type="hidden" name="page_name" />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                      <div>
