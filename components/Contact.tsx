@@ -33,8 +33,8 @@ const Contact: React.FC = () => {
 
     emailjs
       .sendForm(SERVICE_ID, TEMPLATE_ID, form, { publicKey: PUBLIC_KEY })
-      .then(() => {
-        console.log('EmailJS: email sent successfully');
+      .then((response) => {
+        console.log('EmailJS: email sent successfully', response);
         setStatus('success');
         formRef.current?.reset();
       })
