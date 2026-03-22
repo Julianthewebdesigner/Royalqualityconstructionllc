@@ -1,9 +1,44 @@
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Phone, ArrowRight, Award, Shield, Star } from 'lucide-react';
 import { BUSINESS_INFO } from '../constants';
 
+const SERVICE_ID = 'service_xi2ojhz';
+const TEMPLATE_ID = 'template_2rtaaar';
+const PUBLIC_KEY = 'rTisv9mUzGUKgvShR';
+
 const Hero: React.FC = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    console.log('submit fired');
+    console.log('formRef.current', formRef.current);
+
+    const form = formRef.current;
+    (form.elements.namedItem('submitted_at') as HTMLInputElement).value =
+      new Date().toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short' });
+    (form.elements.namedItem('page_name') as HTMLInputElement).value = window.location.pathname;
+
+    console.log('FormData entries', [...new FormData(form).entries()]);
+
+    setStatus('loading');
+
+    try {
+      const result = await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form, { publicKey: PUBLIC_KEY });
+      console.log('EmailJS success', result);
+      setStatus('success');
+      form.reset();
+    } catch (error) {
+      console.error('EmailJS error', error);
+      setStatus('error');
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center pt-32 md:pt-36 pb-16 overflow-hidden">
       {/* Hero Background with Luxury Black Overlay */}
@@ -121,37 +156,61 @@ const Hero: React.FC = () => {
                 </div>
               </div>
 
-              <form className="space-y-4 mt-6">
-                <div>
-                  <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Service Needed</label>
-                  <select className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium">
-                    <option>Select a Service</option>
-                    <option>Kitchen & Bath Remodeling</option>
-                    <option>Premium Flooring</option>
-                    <option>Custom Carpentry</option>
-                    <option>Luxury Decks & Patios</option>
-                    <option>Home Renovation</option>
-                  </select>
+              {status === 'success' ? (
+                <div className="py-8 text-center space-y-3">
+                  <p className="text-xl font-black text-charcoal">Request Sent!</p>
+                  <p className="text-charcoal/60 text-sm font-medium">We'll get back to you within 24 hours.</p>
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="text-amber-500 font-bold underline underline-offset-4 text-sm"
+                  >
+                    Send another request
+                  </button>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+              ) : (
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 mt-6">
+                  {/* Hidden fields — values set at submit time */}
+                  <input type="hidden" name="submitted_at" />
+                  <input type="hidden" name="page_name" />
+
                   <div>
-                    <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Phone</label>
-                    <input type="tel" placeholder="(206) 555-0100" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Service Needed</label>
+                    <select name="service_needed" required className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium">
+                      <option value="">Select a Service</option>
+                      <option value="Kitchen & Bath Remodeling">Kitchen & Bath Remodeling</option>
+                      <option value="Premium Flooring">Premium Flooring</option>
+                      <option value="Custom Carpentry">Custom Carpentry</option>
+                      <option value="Luxury Decks & Patios">Luxury Decks & Patios</option>
+                      <option value="Home Renovation">Home Renovation</option>
+                    </select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Phone</label>
+                      <input type="tel" name="phone" required placeholder="(206) 555-0100" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">ZIP Code</label>
+                      <input type="text" name="zip_code" required placeholder="98101" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
+                    </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">ZIP Code</label>
-                    <input type="text" placeholder="98101" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Full Name</label>
+                    <input type="text" name="full_name" required placeholder="John Doe" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
                   </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Full Name</label>
-                  <input type="text" placeholder="John Doe" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
-                </div>
-                <button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-5 rounded-xl font-bold text-lg hover:from-amber-600 hover:to-amber-700 transition-all shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 active:scale-95 mt-2 border-2 border-amber-400/20">
-                  Get My Free Quote →
-                </button>
-                <p className="text-xs text-center text-charcoal/50 mt-3">🔒 Your information is secure and confidential</p>
-              </form>
+                  <div>
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2 ml-1">Email</label>
+                    <input type="email" name="email" required placeholder="john@example.com" className="w-full bg-cream/50 border-2 border-charcoal/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-charcoal/30 focus:border-charcoal/30 transition-all font-medium" />
+                  </div>
+                  {status === 'error' && (
+                    <p className="text-red-500 text-sm font-bold text-center">Something went wrong. Please try again or call us.</p>
+                  )}
+                  <button type="submit" disabled={status === 'loading'} className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-5 rounded-xl font-bold text-lg hover:from-amber-600 hover:to-amber-700 transition-all shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 active:scale-95 mt-2 border-2 border-amber-400/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100">
+                    {status === 'loading' ? 'Sending...' : 'Get My Free Quote →'}
+                  </button>
+                  <p className="text-xs text-center text-charcoal/50 mt-3">🔒 Your information is secure and confidential</p>
+                </form>
+              )}
             </div>
           </div>
         </div>
