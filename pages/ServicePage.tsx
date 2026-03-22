@@ -1,13 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { SERVICE_DETAILS } from '../serviceDetails';
 import { ArrowLeft, CheckCircle2, Phone, Mail } from 'lucide-react';
 import { BUSINESS_INFO } from '../constants';
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID = 'service_xi2ojhz';
+const EMAILJS_TEMPLATE_ID = 'template_2rtaaar';
+const EMAILJS_PUBLIC_KEY = 'rTisv9mUzGUKgvShR';
 
 const ServicePage: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
   const service = SERVICE_DETAILS.find(s => s.id === serviceId);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setStatus('sending');
+    try {
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        EMAILJS_PUBLIC_KEY
+      );
+      setStatus('success');
+      formRef.current.reset();
+    } catch {
+      setStatus('error');
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -269,107 +295,141 @@ const ServicePage: React.FC = () => {
               </p>
             </div>
 
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+            {status === 'success' ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 size={32} className="text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-charcoal mb-2">Request Sent!</h3>
+                <p className="text-charcoal/60 mb-6">
+                  Thanks! We'll get back to you with a detailed estimate within 24 hours.
+                </p>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="text-accent font-bold hover:underline"
+                >
+                  Submit another request
+                </button>
+              </div>
+            ) : (
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                {/* Hidden fields required by EmailJS template */}
+                <input type="hidden" name="service_needed" value={service.title} />
+                <input type="hidden" name="submitted_at" value={new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} />
+                <input type="hidden" name="page_name" value={`Service Page - ${service.title}`} />
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="full_name"
+                      placeholder="John Doe"
+                      required
+                      className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="(206) 555-0123"
+                      required
+                      className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                    Full Name *
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="john@example.com"
+                    required
+                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2">
+                      City *
+                    </label>
+                    <select
+                      required
+                      className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    >
+                      <option value="">Select City</option>
+                      <option value="Seattle">Seattle</option>
+                      <option value="Tacoma">Tacoma</option>
+                      <option value="Puyallup">Puyallup</option>
+                      <option value="Bellevue">Bellevue</option>
+                      <option value="Kirkland">Kirkland</option>
+                      <option value="Renton">Renton</option>
+                      <option value="Kent">Kent</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-charcoal/80 mb-2">
+                      ZIP Code *
+                    </label>
+                    <input
+                      type="text"
+                      name="zip_code"
+                      placeholder="98101"
+                      required
+                      className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-charcoal/80 mb-2">
+                    Service Needed
                   </label>
                   <input
                     type="text"
-                    placeholder="John Doe"
-                    required
-                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    value={service.title}
+                    readOnly
+                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 text-charcoal/60"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                    Phone Number *
+                    Project Details
                   </label>
-                  <input
-                    type="tel"
-                    placeholder="(206) 555-0123"
-                    required
-                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                  />
+                  <textarea
+                    rows={5}
+                    placeholder="Tell us about your project..."
+                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all resize-none"
+                  ></textarea>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  placeholder="john@example.com"
-                  required
-                  className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                />
-              </div>
+                {status === 'error' && (
+                  <p className="text-red-600 text-sm font-medium text-center">
+                    Something went wrong. Please try again or call us directly.
+                  </p>
+                )}
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                    City *
-                  </label>
-                  <select
-                    required
-                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                  >
-                    <option value="">Select City</option>
-                    <option value="seattle">Seattle</option>
-                    <option value="tacoma">Tacoma</option>
-                    <option value="puyallup">Puyallup</option>
-                    <option value="bellevue">Bellevue</option>
-                    <option value="kirkland">Kirkland</option>
-                    <option value="renton">Renton</option>
-                    <option value="kent">Kent</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                    ZIP Code *
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="98101"
-                    required
-                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                  Service Needed
-                </label>
-                <input
-                  type="text"
-                  value={service.title}
-                  readOnly
-                  className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 text-charcoal/60"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-charcoal/80 mb-2">
-                  Project Details
-                </label>
-                <textarea
-                  rows={5}
-                  placeholder="Tell us about your project..."
-                  className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all resize-none"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-lg shadow-accent/20"
-              >
-                Submit Request
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-lg shadow-accent/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  {status === 'sending' ? 'Sending...' : 'Submit Request'}
+                </button>
+              </form>
+            )}
 
             <div className="mt-8 pt-8 border-t border-charcoal/10">
               <div className="text-center">
