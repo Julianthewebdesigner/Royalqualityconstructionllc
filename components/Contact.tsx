@@ -1,10 +1,35 @@
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import Section from './Section';
 import { BUSINESS_INFO } from '../constants';
-import { Phone, Mail, MapPin, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+
+const SERVICE_ID = 'service_xi2ojhz';
+const TEMPLATE_ID = 'template_2rtaaar';
+const PUBLIC_KEY = 'rTisv9mUzGUKgvShR';
 
 const Contact: React.FC = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setStatus('loading');
+
+    emailjs
+      .sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+      .then(() => {
+        setStatus('success');
+        formRef.current?.reset();
+      })
+      .catch(() => {
+        setStatus('error');
+      });
+  };
+
   return (
     <Section id="contact" className="pb-0 overflow-visible">
       <div className="bg-charcoal rounded-[3rem] p-8 md:p-16 lg:p-20 text-white shadow-3xl relative overflow-hidden">
@@ -66,35 +91,110 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] p-8 md:p-10 border border-white/10 shadow-2xl">
-             <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div>
-                     <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Your Name</label>
-                     <input type="text" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20" placeholder="Jane Smith" />
-                   </div>
-                   <div>
-                     <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Phone Number</label>
-                     <input type="tel" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20" placeholder="(206) --- ----" />
-                   </div>
-                </div>
-                <div>
-                   <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Project Type</label>
-                   <select className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all">
-                      <option className="bg-charcoal">Remodeling</option>
-                      <option className="bg-charcoal">Flooring</option>
-                      <option className="bg-charcoal">Exterior / Deck</option>
-                      <option className="bg-charcoal">Other</option>
-                   </select>
-                </div>
-                <div>
-                   <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Project Details</label>
-                   <textarea rows={4} className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20" placeholder="Tell us about your project..."></textarea>
-                </div>
-                <button className="w-full bg-accent hover:bg-white hover:text-charcoal text-white py-5 rounded-2xl font-black text-lg transition-all shadow-xl shadow-accent/10 flex items-center justify-center gap-3 active:scale-95">
-                  Send Message
-                  <Send size={20} />
-                </button>
-             </form>
+             {status === 'success' ? (
+               <div className="flex flex-col items-center justify-center h-full py-16 text-center gap-4">
+                 <CheckCircle size={56} className="text-accent" />
+                 <h3 className="text-2xl font-black">Message Sent!</h3>
+                 <p className="text-white/60 font-medium">We'll be in touch shortly with your quote.</p>
+                 <button
+                   onClick={() => setStatus('idle')}
+                   className="mt-4 text-accent font-black underline underline-offset-4 text-sm"
+                 >
+                   Send another request
+                 </button>
+               </div>
+             ) : (
+               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                  {/* Hidden fields — must be inside the form and rendered before submit */}
+                  <input type="hidden" name="submitted_at" value={new Date().toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short' })} />
+                  <input type="hidden" name="page_name" value="Contact Page" />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div>
+                       <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Your Name</label>
+                       <input
+                         type="text"
+                         name="full_name"
+                         required
+                         className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20"
+                         placeholder="Jane Smith"
+                       />
+                     </div>
+                     <div>
+                       <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Phone Number</label>
+                       <input
+                         type="tel"
+                         name="phone"
+                         required
+                         className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20"
+                         placeholder="(206) --- ----"
+                       />
+                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div>
+                       <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Email</label>
+                       <input
+                         type="email"
+                         name="email"
+                         required
+                         className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20"
+                         placeholder="jane@email.com"
+                       />
+                     </div>
+                     <div>
+                       <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">ZIP Code</label>
+                       <input
+                         type="text"
+                         name="zip_code"
+                         required
+                         className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all placeholder:text-white/20"
+                         placeholder="98101"
+                       />
+                     </div>
+                  </div>
+
+                  <div>
+                     <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-2">Project Type</label>
+                     <select
+                       name="service_needed"
+                       required
+                       className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-accent/50 text-white transition-all"
+                     >
+                        <option className="bg-charcoal">Remodeling</option>
+                        <option className="bg-charcoal">Flooring</option>
+                        <option className="bg-charcoal">Exterior / Deck</option>
+                        <option className="bg-charcoal">Other</option>
+                     </select>
+                  </div>
+
+                  {status === 'error' && (
+                    <div className="flex items-center gap-3 text-red-400 text-sm font-bold bg-red-400/10 rounded-xl px-4 py-3">
+                      <AlertCircle size={18} />
+                      Something went wrong. Please try again or call us directly.
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="w-full bg-accent hover:bg-white hover:text-charcoal text-white py-5 rounded-2xl font-black text-lg transition-all shadow-xl shadow-accent/10 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100"
+                  >
+                    {status === 'loading' ? (
+                      <>
+                        <Loader size={20} className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <Send size={20} />
+                      </>
+                    )}
+                  </button>
+               </form>
+             )}
           </div>
         </div>
       </div>
